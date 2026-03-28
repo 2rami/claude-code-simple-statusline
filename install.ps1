@@ -81,8 +81,13 @@ if (-not (Test-Path $ClaudeDir)) {
     New-Item -ItemType Directory -Path $ClaudeDir -Force | Out-Null
 }
 
+$Configure = "$ClaudeDir\configure-statusline.py"
+
 Write-Host "  Downloading statusline.py..."
 Invoke-WebRequest -Uri "$BaseUrl/statusline.py" -OutFile $Statusline -UseBasicParsing
+
+Write-Host "  Downloading configure-statusline.py..."
+Invoke-WebRequest -Uri "$BaseUrl/configure.py" -OutFile $Configure -UseBasicParsing
 
 Write-Host "  Downloading user_prompt_submit.py..."
 Invoke-WebRequest -Uri "$BaseUrl/user_prompt_submit.py" -OutFile $Hook -UseBasicParsing
@@ -147,5 +152,26 @@ $s | ConvertTo-Json -Depth 10 | Set-Content $Settings -Encoding UTF8
 Write-Host "  Updated $Settings"
 
 Write-Host ""
-Write-Host "  Done! Restart Claude Code to see the new statusline."
+Write-Host "  Installation complete!"
+Write-Host ""
+
+# ── Launch interactive configuration ───────────────────────────────
+$UvCmd = $null
+try {
+    $UvCmd = (Get-Command uv -ErrorAction SilentlyContinue).Source
+} catch {}
+
+if ($UvCmd) {
+    Write-Host "  Launching configuration..."
+    Write-Host ""
+    & uv run $Configure
+    Write-Host ""
+    Write-Host "  Restart Claude Code to see the new statusline."
+} else {
+    Write-Host "  [!] 'uv' not found. Install it first:"
+    Write-Host "      irm https://astral.sh/uv/install.ps1 | iex"
+    Write-Host ""
+    Write-Host "  Then run: uv run $Configure"
+    Write-Host "  And restart Claude Code."
+}
 Write-Host ""

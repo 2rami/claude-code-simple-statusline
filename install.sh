@@ -8,6 +8,7 @@ set -e
 CLAUDE_DIR="$HOME/.claude"
 BASE_URL="https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main"
 STATUSLINE="$CLAUDE_DIR/statusline.py"
+CONFIGURE="$CLAUDE_DIR/configure-statusline.py"
 HOOK="$CLAUDE_DIR/user_prompt_submit.py"
 CONFIG="$CLAUDE_DIR/statusline-config.json"
 SETTINGS="$CLAUDE_DIR/settings.json"
@@ -57,6 +58,10 @@ mkdir -p "$CLAUDE_DIR"
 echo "  Downloading statusline.py..."
 curl -fsSL "$BASE_URL/statusline.py" -o "$STATUSLINE"
 chmod +x "$STATUSLINE"
+
+echo "  Downloading configure-statusline.py..."
+curl -fsSL "$BASE_URL/configure.py" -o "$CONFIGURE"
+chmod +x "$CONFIGURE"
 
 echo "  Downloading user_prompt_submit.py..."
 curl -fsSL "$BASE_URL/user_prompt_submit.py" -o "$HOOK"
@@ -140,5 +145,21 @@ MANUAL
 fi
 
 echo ""
-echo "  Done! Restart Claude Code to see the new statusline."
+echo "  Installation complete!"
+echo ""
+
+# ── Launch interactive configuration ───────────────────────────────
+if command -v uv &> /dev/null; then
+    echo "  Launching configuration..."
+    echo ""
+    uv run "$CONFIGURE"
+    echo ""
+    echo "  Restart Claude Code to see the new statusline."
+else
+    echo "  [!] 'uv' not found. Install it first:"
+    echo "      curl -LsSf https://astral.sh/uv/install.sh | sh"
+    echo ""
+    echo "  Then run: uv run ~/.claude/configure-statusline.py"
+    echo "  And restart Claude Code."
+fi
 echo ""

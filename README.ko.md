@@ -180,6 +180,18 @@ Copy-Item config.json $env:USERPROFILE\.claude\statusline-config.json
 
 ## 설정
 
+### 인터랙티브 CLI (추천)
+
+방향키로 선택하면서 설정할 수 있는 CLI 도구:
+
+```bash
+uv run ~/.claude/configure-statusline.py
+```
+
+아이콘 세트, 색상, 구분자, 프롬프트 길이, 개별 아이콘까지 전부 터미널에서 파일 수정 없이 설정 가능해.
+
+### 수동 설정
+
 모든 커스터마이징은 `config.json`에서 해. 스크립트가 설정 파일을 찾는 순서:
 
 1. `~/.claude/statusline-config.json`

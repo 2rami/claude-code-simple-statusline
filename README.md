@@ -183,6 +183,18 @@ Copy-Item config.json $env:USERPROFILE\.claude\statusline-config.json
 
 ## Configuration
 
+### Interactive CLI (Recommended)
+
+Run the interactive configurator with arrow-key navigation:
+
+```bash
+uv run ~/.claude/configure-statusline.py
+```
+
+You can change icon sets, colors, separator, prompt length, and individual icons — all from the terminal without editing files manually.
+
+### Manual Configuration
+
 All customization is done through `config.json`. The script looks for config in this order:
 
 1. `~/.claude/statusline-config.json`
