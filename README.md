@@ -110,9 +110,10 @@ curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline
 
 ```bash
 cp statusline.py ~/.claude/statusline.py
+cp configure.py ~/.claude/configure-statusline.py
 cp user_prompt_submit.py ~/.claude/user_prompt_submit.py
 cp config.json ~/.claude/statusline-config.json
-chmod +x ~/.claude/statusline.py ~/.claude/user_prompt_submit.py
+chmod +x ~/.claude/statusline.py ~/.claude/configure-statusline.py ~/.claude/user_prompt_submit.py
 ```
 
 2. Add to your `~/.claude/settings.json`:
@@ -152,6 +153,7 @@ irm https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/i
 
 ```powershell
 Copy-Item statusline.py $env:USERPROFILE\.claude\statusline.py
+Copy-Item configure.py $env:USERPROFILE\.claude\configure-statusline.py
 Copy-Item user_prompt_submit.py $env:USERPROFILE\.claude\user_prompt_submit.py
 Copy-Item config.json $env:USERPROFILE\.claude\statusline-config.json
 ```
