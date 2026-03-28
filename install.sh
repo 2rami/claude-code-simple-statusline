@@ -6,7 +6,7 @@
 set -e
 
 CLAUDE_DIR="$HOME/.claude"
-BASE_URL="https://raw.githubusercontent.com/2rami/claude-code-statusline-seoulnight/main"
+BASE_URL="https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main"
 DEST="$CLAUDE_DIR/statusline.py"
 CONFIG_DEST="$CLAUDE_DIR/statusline-config.json"
 SETTINGS="$CLAUDE_DIR/settings.json"

@@ -82,7 +82,7 @@ brew install --cask font-jetbrains-mono-nerd-font
 **한 줄 설치:**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/2rami/simple-statusline/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/install.sh | bash
 ```
 
 **수동 설치:**
