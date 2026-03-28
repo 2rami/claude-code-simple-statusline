@@ -1,18 +1,18 @@
 #!/bin/bash
 
-# Claude Code Statusline - Tokyo Night
+# Claude Code Statusline - Simple Minimal
 # One-line installer
 
 set -e
 
 CLAUDE_DIR="$HOME/.claude"
-BASE_URL="https://raw.githubusercontent.com/momeWomo/claude-code-tokyonight-statusline/main"
+BASE_URL="https://raw.githubusercontent.com/2rami/claude-code-statusline-seoulnight/main"
 DEST="$CLAUDE_DIR/statusline.py"
 CONFIG_DEST="$CLAUDE_DIR/statusline-config.json"
 SETTINGS="$CLAUDE_DIR/settings.json"
 
 echo ""
-echo "  Claude Code Statusline - Tokyo Night"
+echo "  Claude Code Statusline - Simple Minimal"
 echo "  ====================================="
 echo ""
 

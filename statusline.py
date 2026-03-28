@@ -7,10 +7,10 @@
 # ///
 
 """
-Claude Code Statusline - Tokyo Night
+Claude Code Statusline
 
-A beautiful statusline for Claude Code with Tokyo Night color palette,
-configurable icons, and intelligent prompt classification.
+A simple, minimal statusline for Claude Code with
+configurable icons and intelligent prompt classification.
 
 Wide:   Opus 4.5 |  main |  my-project |  42% |  create...
 Narrow:  Opus 4.5 |  main |  my-project |  42% |  ...

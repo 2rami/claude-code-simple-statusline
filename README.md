@@ -1,8 +1,8 @@
 <div align="center">
 
-# Claude Code Statusline - Tokyo Night
+# Claude Code Statusline
 
-A minimal, beautiful statusline for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) with the Tokyo Night color palette.
+A simple, minimal statusline for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11+-green.svg)](https://python.org)
@@ -83,7 +83,7 @@ Set the Nerd Font as your terminal's font:
 **One-line install:**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/momeWomo/claude-code-tokyonight-statusline/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-statusline-seoulnight/main/install.sh | bash
 ```
 
 **Manual install:**
