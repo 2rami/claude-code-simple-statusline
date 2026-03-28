@@ -15,21 +15,27 @@ Write-Host "  Claude Code Statusline - Simple Minimal"
 Write-Host "  ====================================="
 Write-Host ""
 
-# ── Find Python ─────────────────────────────────────────────────────
+# ── Find Python (skip WindowsApps aliases) ──────────────────────────
 $PythonCmd = $null
 foreach ($cmd in @("python3", "python")) {
     try {
-        $ver = & $cmd --version 2>&1
-        if ($ver -match "Python 3") {
-            $PythonCmd = (Get-Command $cmd).Source
-            break
+        $candidates = Get-Command $cmd -All -ErrorAction SilentlyContinue
+        foreach ($c in $candidates) {
+            if ($c.Source -match "WindowsApps") { continue }
+            $ver = & $c.Source --version 2>&1
+            if ($ver -match "Python 3") {
+                $PythonCmd = $c.Source
+                break
+            }
         }
+        if ($PythonCmd) { break }
     } catch {}
 }
 
 if (-not $PythonCmd) {
-    Write-Host "  [!] Python 3 not found. Install Python 3.11+ first."
-    Write-Host "      https://www.python.org/downloads/"
+    Write-Host "  [!] Python 3 not found (WindowsApps aliases are skipped)."
+    Write-Host "      Install Python 3.11+: https://www.python.org/downloads/"
+    Write-Host "      Or use conda/miniconda."
     exit 1
 }
 Write-Host "  Python found: $PythonCmd"
