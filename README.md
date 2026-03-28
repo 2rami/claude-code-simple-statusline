@@ -83,7 +83,7 @@ Set the Nerd Font as your terminal's font:
 **One-line install:**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-statusline-seoulnight/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/2rami/simple-statusline/main/install.sh | bash
 ```
 
 **Manual install:**
