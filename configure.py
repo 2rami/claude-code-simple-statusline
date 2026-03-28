@@ -106,6 +106,9 @@ def hex_to_ansi(h):
 
 
 def preview_statusline(cfg):
+    import sys
+    sys.path.insert(0, str(Path(__file__).parent))
+    sys.path.insert(0, str(Path.home() / ".claude"))
     from statusline import ICON_PRESETS
     preset = cfg.get("icon_set", "nerd-font")
     icons = dict(ICON_PRESETS.get(preset, ICON_PRESETS["nerd-font"]))
