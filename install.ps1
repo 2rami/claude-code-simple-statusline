@@ -95,61 +95,100 @@ Invoke-WebRequest -Uri "$BaseUrl/user_prompt_submit.py" -OutFile $Hook -UseBasic
 Write-Host "  Downloading config.json..."
 Invoke-WebRequest -Uri "$BaseUrl/config.json" -OutFile $Config -UseBasicParsing
 
-# ── Update settings.json ────────────────────────────────────────────
-# Convert Python path to forward slashes for JSON
-$PythonPath = $PythonCmd -replace '\\', '/'
-$StatuslinePath = $Statusline -replace '\\', '/'
-$HookPath = $Hook -replace '\\', '/'
+# ── Update settings.json (via Python for PS5.1 compat) ──────────────
+$PythonPath = ($PythonCmd -replace '\\', '/')
+$StatuslinePath = ($Statusline -replace '\\', '/')
+$HookPath = ($Hook -replace '\\', '/')
 
-$s = @{}
-if (Test-Path $Settings) {
-    $s = Get-Content $Settings -Raw | ConvertFrom-Json -AsHashtable
+$pyScript = @"
+import json, os
+
+path = r'$Settings'
+s = {}
+if os.path.exists(path):
+    with open(path, 'r', encoding='utf-8') as f:
+        s = json.load(f)
+
+s['statusLine'] = {
+    'type': 'command',
+    'command': '$PythonPath $StatuslinePath',
+    'padding': 0
 }
 
-$s["statusLine"] = @{
-    type    = "command"
-    command = "$PythonPath $StatuslinePath"
-    padding = 0
-}
+hooks = s.get('hooks', {})
+ups = hooks.get('UserPromptSubmit', [])
 
-# Add hook
-if (-not $s.ContainsKey("hooks")) {
-    $s["hooks"] = @{}
-}
-$hooks = $s["hooks"]
+already = False
+for entry in ups:
+    for h in entry.get('hooks', []):
+        if 'user_prompt_submit' in h.get('command', ''):
+            already = True
+            break
 
-$hookCmd = "$PythonPath $HookPath"
-$hookEntry = @{
-    matcher = "*"
-    hooks   = @(@{
-        type    = "command"
-        command = $hookCmd
+if not already:
+    ups.append({
+        'matcher': '*',
+        'hooks': [{'type': 'command', 'command': '$PythonPath $HookPath'}]
     })
-}
 
-$already = $false
-if ($hooks.ContainsKey("UserPromptSubmit")) {
-    foreach ($entry in $hooks["UserPromptSubmit"]) {
-        foreach ($h in $entry["hooks"]) {
-            if ($h["command"] -match "user_prompt_submit") {
-                $already = $true
-                break
-            }
-        }
+hooks['UserPromptSubmit'] = ups
+s['hooks'] = hooks
+
+with open(path, 'w', encoding='utf-8') as f:
+    json.dump(s, f, indent=2, ensure_ascii=False)
+print('  Updated ' + path)
+"@
+
+& $PythonCmd -c $pyScript
+
+# ── Set Windows Terminal font ───────────────────────────────────────
+$WtSettings = @(
+    "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json",
+    "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+)
+
+foreach ($wtPath in $WtSettings) {
+    if (Test-Path $wtPath) {
+        $wtPyScript = @"
+import json
+
+path = r'$wtPath'
+with open(path, 'r', encoding='utf-8') as f:
+    content = f.read()
+
+lines = []
+for line in content.split('\n'):
+    stripped = line.lstrip()
+    if not stripped.startswith('//'):
+        lines.append(line)
+clean = '\n'.join(lines)
+
+try:
+    wt = json.loads(clean)
+except:
+    print('  [!] Could not parse Windows Terminal settings, skipping font setup')
+    exit(0)
+
+changed = False
+defaults = wt.get('profiles', {}).get('defaults', {})
+font = defaults.get('font', {})
+if font.get('face') != 'D2CodingLigature Nerd Font':
+    font['face'] = 'D2CodingLigature Nerd Font'
+    defaults['font'] = font
+    wt.setdefault('profiles', {})['defaults'] = defaults
+    changed = True
+
+if changed:
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(wt, f, indent=4, ensure_ascii=False)
+    print('  Windows Terminal font set to D2CodingLigature Nerd Font')
+else:
+    print('  Windows Terminal font already set')
+"@
+        & $PythonCmd -c $wtPyScript
+        break
     }
 }
-
-if (-not $already) {
-    if (-not $hooks.ContainsKey("UserPromptSubmit")) {
-        $hooks["UserPromptSubmit"] = @()
-    }
-    $hooks["UserPromptSubmit"] += $hookEntry
-}
-
-$s["hooks"] = $hooks
-
-$s | ConvertTo-Json -Depth 10 | Set-Content $Settings -Encoding UTF8
-Write-Host "  Updated $Settings"
 
 Write-Host ""
 Write-Host "  Installation complete!"
