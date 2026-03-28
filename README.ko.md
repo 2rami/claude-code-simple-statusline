@@ -47,52 +47,38 @@
 
 ## 폰트 설정
 
-기본 아이콘 세트는 **Nerd Font** 글리프를 사용해. 아이콘이 제대로 보이려면 터미널 폰트가 Nerd Font 패치 버전이어야 해.
+기본 아이콘 세트는 **Nerd Font** 글리프를 사용해. 이 프로젝트는 **D2Coding Nerd Font**을 사용해 — 한글 지원, 리거처, Nerd Font 아이콘이 다 포함된 모노스페이스 폰트야.
 
-### 추천 폰트
-
-| 폰트 | 다운로드 |
-|------|----------|
-| **JetBrainsMono Nerd Font** | [nerdfonts.com](https://www.nerdfonts.com/font-downloads) |
-| **FiraCode Nerd Font** | [nerdfonts.com](https://www.nerdfonts.com/font-downloads) |
-| **Hack Nerd Font** | [nerdfonts.com](https://www.nerdfonts.com/font-downloads) |
-| **MesloLGS Nerd Font** | [nerdfonts.com](https://www.nerdfonts.com/font-downloads) |
-
-### 폰트 설치
+설치 스크립트가 자동으로 폰트를 다운로드해서 설치해줘. 수동으로 설치하려면:
 
 <details>
 <summary><b>macOS (Homebrew)</b></summary>
 
 ```bash
-brew install --cask font-jetbrains-mono-nerd-font
+brew install --cask font-d2coding-nerd-font
 ```
 </details>
 
 <details>
-<summary><b>Windows (winget)</b></summary>
+<summary><b>Windows</b></summary>
 
-```powershell
-winget install JetBrainsMono.NerdFont
-```
-
-또는 Chocolatey:
-
-```powershell
-choco install nerd-fonts-jetbrains-mono
-```
+[Nerd Fonts GitHub](https://github.com/ryanoasis/nerd-fonts/releases/latest/download/D2Coding.zip)에서 다운로드 후 `.ttf` 파일을 설치.
 </details>
 
 <details>
 <summary><b>Linux</b></summary>
 
-[nerdfonts.com](https://www.nerdfonts.com/font-downloads)에서 다운로드 후 `~/.local/share/fonts/`에 압축 해제, 그 다음:
-
 ```bash
+curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/D2Coding.tar.xz -o /tmp/D2Coding.tar.xz
+mkdir -p ~/.local/share/fonts
+tar -xf /tmp/D2Coding.tar.xz -C ~/.local/share/fonts
 fc-cache -fv
 ```
 </details>
 
 ### 터미널 폰트 설정
+
+설치 후 터미널에서 **D2Coding Nerd Font**를 기본 폰트로 설정해:
 
 | 터미널 | 설정 위치 |
 |--------|----------|

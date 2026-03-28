@@ -17,22 +17,38 @@ echo "  Claude Code Statusline - Simple Minimal"
 echo "  ====================================="
 echo ""
 
-# ── Font check ──────────────────────────────────────────────────────
-echo "  Checking font support..."
+# ── Font: D2Coding Nerd Font ────────────────────────────────────────
+FONT_INSTALLED=false
 if command -v fc-list &> /dev/null; then
-    if fc-list | grep -qi "nerd"; then
-        echo "  Nerd Font detected"
-    else
-        echo ""
-        echo "  [!] No Nerd Font detected. Icons may not render correctly."
-        if [[ "$OSTYPE" == darwin* ]]; then
-            echo "      Install: brew install --cask font-jetbrains-mono-nerd-font"
-        else
-            echo "      Install: https://www.nerdfonts.com/font-downloads"
-        fi
-        echo "      Or set \"icon_set\": \"unicode\" in $CONFIG"
-        echo ""
+    if fc-list | grep -qi "D2Coding.*Nerd\|D2CodingLigature.*Nerd"; then
+        echo "  D2Coding Nerd Font detected"
+        FONT_INSTALLED=true
     fi
+fi
+
+if [ "$FONT_INSTALLED" = false ]; then
+    echo "  Installing D2Coding Nerd Font..."
+    if [[ "$OSTYPE" == darwin* ]] && command -v brew &> /dev/null; then
+        brew install --cask font-d2coding-nerd-font
+        echo "  D2Coding Nerd Font installed via Homebrew"
+    else
+        FONT_DIR="$HOME/.local/share/fonts"
+        mkdir -p "$FONT_DIR"
+        TMP_DIR=$(mktemp -d)
+        echo "  Downloading from GitHub..."
+        curl -fsSL "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/D2Coding.tar.xz" -o "$TMP_DIR/D2Coding.tar.xz"
+        tar -xf "$TMP_DIR/D2Coding.tar.xz" -C "$TMP_DIR"
+        cp "$TMP_DIR"/*.ttf "$FONT_DIR/" 2>/dev/null || cp "$TMP_DIR"/*.otf "$FONT_DIR/" 2>/dev/null || true
+        rm -rf "$TMP_DIR"
+        if command -v fc-cache &> /dev/null; then
+            fc-cache -fv > /dev/null 2>&1
+        fi
+        echo "  D2Coding Nerd Font installed to $FONT_DIR"
+    fi
+    echo ""
+    echo "  [!] Set D2Coding Nerd Font as your terminal font for icons to render."
+    echo "      Or set \"icon_set\": \"unicode\" in $CONFIG"
+    echo ""
 fi
 
 # ── Download files ──────────────────────────────────────────────────

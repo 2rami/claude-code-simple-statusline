@@ -34,17 +34,44 @@ if (-not $PythonCmd) {
 }
 Write-Host "  Python found: $PythonCmd"
 
-# ── Font check ──────────────────────────────────────────────────────
+# ── Font: D2Coding Nerd Font ────────────────────────────────────────
 Write-Host "  Checking font support..."
+Add-Type -AssemblyName System.Drawing
 $fonts = (New-Object System.Drawing.Text.InstalledFontCollection).Families.Name
-$nerdFound = $fonts | Where-Object { $_ -match "Nerd" }
-if ($nerdFound) {
-    Write-Host "  Nerd Font detected"
+$d2Found = $fonts | Where-Object { $_ -match "D2Coding.*Nerd" }
+
+if ($d2Found) {
+    Write-Host "  D2Coding Nerd Font detected"
 } else {
+    Write-Host "  Installing D2Coding Nerd Font..."
+    $TmpDir = Join-Path $env:TEMP "d2coding-nerd-font"
+    New-Item -ItemType Directory -Path $TmpDir -Force | Out-Null
+
+    $ZipUrl = "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/D2Coding.zip"
+    $ZipPath = Join-Path $TmpDir "D2Coding.zip"
+
+    Write-Host "  Downloading from GitHub..."
+    Invoke-WebRequest -Uri $ZipUrl -OutFile $ZipPath -UseBasicParsing
+
+    Expand-Archive -Path $ZipPath -DestinationPath $TmpDir -Force
+
+    $FontDir = Join-Path $env:LOCALAPPDATA "Microsoft\Windows\Fonts"
+    if (-not (Test-Path $FontDir)) {
+        New-Item -ItemType Directory -Path $FontDir -Force | Out-Null
+    }
+
+    $fontFiles = Get-ChildItem -Path $TmpDir -Filter "*.ttf" -Recurse
+    $shell = New-Object -ComObject Shell.Application
+    $fontsFolder = $shell.Namespace(0x14)
+    foreach ($f in $fontFiles) {
+        Copy-Item $f.FullName -Destination $FontDir -Force
+        $fontsFolder.CopyHere($f.FullName, 0x14)
+    }
+
+    Remove-Item -Path $TmpDir -Recurse -Force
+    Write-Host "  D2Coding Nerd Font installed"
     Write-Host ""
-    Write-Host "  [!] No Nerd Font detected. Icons may not render correctly."
-    Write-Host "      Install: winget install JetBrainsMono.NerdFont"
-    Write-Host "      Or:      choco install nerd-fonts-jetbrains-mono"
+    Write-Host "  [!] Set D2Coding Nerd Font as your terminal font for icons to render."
     Write-Host "      Or set `"icon_set`": `"unicode`" in $Config"
     Write-Host ""
 }

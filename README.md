@@ -50,52 +50,38 @@ The statusline automatically classifies your last prompt and shows a matching ic
 
 ## Font Setup
 
-The default icon set uses **Nerd Font** glyphs. Your terminal font must be a Nerd Font patched variant for icons to render correctly.
+The default icon set uses **Nerd Font** glyphs. This project uses **D2Coding Nerd Font** — a monospace font with Korean support, ligatures, and Nerd Font icons built in.
 
-### Recommended Fonts
-
-| Font | Download |
-|------|----------|
-| **JetBrainsMono Nerd Font** | [nerdfonts.com](https://www.nerdfonts.com/font-downloads) |
-| **FiraCode Nerd Font** | [nerdfonts.com](https://www.nerdfonts.com/font-downloads) |
-| **Hack Nerd Font** | [nerdfonts.com](https://www.nerdfonts.com/font-downloads) |
-| **MesloLGS Nerd Font** | [nerdfonts.com](https://www.nerdfonts.com/font-downloads) |
-
-### Install Font
+The installer automatically downloads and installs the font. To install manually:
 
 <details>
 <summary><b>macOS (Homebrew)</b></summary>
 
 ```bash
-brew install --cask font-jetbrains-mono-nerd-font
+brew install --cask font-d2coding-nerd-font
 ```
 </details>
 
 <details>
-<summary><b>Windows (winget)</b></summary>
+<summary><b>Windows</b></summary>
 
-```powershell
-winget install JetBrainsMono.NerdFont
-```
-
-Or with Chocolatey:
-
-```powershell
-choco install nerd-fonts-jetbrains-mono
-```
+Download from [Nerd Fonts GitHub](https://github.com/ryanoasis/nerd-fonts/releases/latest/download/D2Coding.zip), extract, and install the `.ttf` files.
 </details>
 
 <details>
 <summary><b>Linux</b></summary>
 
-Download from [nerdfonts.com](https://www.nerdfonts.com/font-downloads), extract to `~/.local/share/fonts/`, then run:
-
 ```bash
+curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/D2Coding.tar.xz -o /tmp/D2Coding.tar.xz
+mkdir -p ~/.local/share/fonts
+tar -xf /tmp/D2Coding.tar.xz -C ~/.local/share/fonts
 fc-cache -fv
 ```
 </details>
 
 ### Set Terminal Font
+
+After installing, set **D2Coding Nerd Font** as your terminal font:
 
 | Terminal | Setting |
 |----------|---------|
