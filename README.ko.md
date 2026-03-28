@@ -11,6 +11,17 @@
 [![Claude Code](https://img.shields.io/badge/Claude_Code-statusline-purple.svg)](https://docs.anthropic.com/en/docs/claude-code)
 
 ![statusline-preview](./assets/preview.png)
+![statusline-preview2](./assets/preview2.png)
+
+**macOS/Linux:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/install.sh | bash
+```
+
+**Windows PowerShell:**
+```powershell
+irm https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/install.ps1 | iex
+```
 
 </div>
 
