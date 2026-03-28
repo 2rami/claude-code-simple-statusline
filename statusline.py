@@ -134,15 +134,13 @@ def get_git_branch(cwd):
 
 
 def get_last_prompt(session_id):
-    session_file = Path.home() / ".claude" / "data" / "sessions" / f"{session_id}.json"
-    if not session_file.exists():
+    prompt_file = Path.home() / ".claude" / "data" / "prompts" / f"{session_id}.json"
+    if not prompt_file.exists():
         return None
     try:
-        with open(session_file, 'r') as f:
+        with open(prompt_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
-            prompts = data.get("prompts", [])
-            if prompts:
-                return prompts[-1]
+            return data.get("prompt")
     except Exception:
         pass
     return None

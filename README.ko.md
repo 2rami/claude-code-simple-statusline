@@ -43,7 +43,6 @@
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
 - Python 3.11+
-- [uv](https://docs.astral.sh/uv/) (Python 패키지 실행기)
 - 선택한 아이콘 세트를 지원하는 터미널 폰트 ([폰트 설정](#폰트-설정) 참고)
 
 ## 폰트 설정
@@ -59,25 +58,56 @@
 | **Hack Nerd Font** | [nerdfonts.com](https://www.nerdfonts.com/font-downloads) |
 | **MesloLGS Nerd Font** | [nerdfonts.com](https://www.nerdfonts.com/font-downloads) |
 
-### Homebrew로 설치 (macOS)
+### 폰트 설치
+
+<details>
+<summary><b>macOS (Homebrew)</b></summary>
 
 ```bash
 brew install --cask font-jetbrains-mono-nerd-font
 ```
+</details>
 
-### 설치 후
+<details>
+<summary><b>Windows (winget)</b></summary>
 
-터미널에서 Nerd Font를 기본 폰트로 설정해:
+```powershell
+winget install JetBrainsMono.NerdFont
+```
 
-- **iTerm2**: Preferences > Profiles > Text > Font
-- **Terminal.app**: Preferences > Profiles > Font
-- **Alacritty**: `alacritty.toml`에서 `font.normal.family`
-- **Warp**: Settings > Appearance > Font
-- **VS Code 터미널**: 설정에서 `terminal.integrated.fontFamily`
+또는 Chocolatey:
+
+```powershell
+choco install nerd-fonts-jetbrains-mono
+```
+</details>
+
+<details>
+<summary><b>Linux</b></summary>
+
+[nerdfonts.com](https://www.nerdfonts.com/font-downloads)에서 다운로드 후 `~/.local/share/fonts/`에 압축 해제, 그 다음:
+
+```bash
+fc-cache -fv
+```
+</details>
+
+### 터미널 폰트 설정
+
+| 터미널 | 설정 위치 |
+|--------|----------|
+| **iTerm2** | Preferences > Profiles > Text > Font |
+| **Terminal.app** | Preferences > Profiles > Font |
+| **Windows Terminal** | 설정 > 프로필 > 모양 > 글꼴 |
+| **VS Code** | 설정에서 `terminal.integrated.fontFamily` |
+| **Alacritty** | `alacritty.toml`에서 `font.normal.family` |
+| **Warp** | Settings > Appearance > Font |
 
 > Nerd Font 설치하기 싫으면? 설정에서 `"icon_set": "unicode"` 또는 `"plain"`으로 바꾸면 돼. [아이콘 세트](#아이콘-세트) 참고.
 
 ## 설치
+
+### macOS / Linux
 
 **한 줄 설치:**
 
@@ -91,8 +121,9 @@ curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline
 
 ```bash
 cp statusline.py ~/.claude/statusline.py
+cp user_prompt_submit.py ~/.claude/user_prompt_submit.py
 cp config.json ~/.claude/statusline-config.json
-chmod +x ~/.claude/statusline.py
+chmod +x ~/.claude/statusline.py ~/.claude/user_prompt_submit.py
 ```
 
 2. `~/.claude/settings.json`에 추가:
@@ -103,9 +134,61 @@ chmod +x ~/.claude/statusline.py
     "type": "command",
     "command": "~/.claude/statusline.py",
     "padding": 0
+  },
+  "hooks": {
+    "UserPromptSubmit": [{
+      "matcher": "*",
+      "hooks": [{
+        "type": "command",
+        "command": "python3 ~/.claude/user_prompt_submit.py"
+      }]
+    }]
   }
 }
 ```
+
+3. Claude Code 재시작.
+
+### Windows
+
+**한 줄 설치 (PowerShell):**
+
+```powershell
+irm https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/install.ps1 | iex
+```
+
+**수동 설치:**
+
+1. 파일들을 `%USERPROFILE%\.claude\`에 복사:
+
+```powershell
+Copy-Item statusline.py $env:USERPROFILE\.claude\statusline.py
+Copy-Item user_prompt_submit.py $env:USERPROFILE\.claude\user_prompt_submit.py
+Copy-Item config.json $env:USERPROFILE\.claude\statusline-config.json
+```
+
+2. `%USERPROFILE%\.claude\settings.json`에 추가:
+
+```json
+{
+  "statusLine": {
+    "type": "command",
+    "command": "python C:/Users/YOU/.claude/statusline.py",
+    "padding": 0
+  },
+  "hooks": {
+    "UserPromptSubmit": [{
+      "matcher": "*",
+      "hooks": [{
+        "type": "command",
+        "command": "python C:/Users/YOU/.claude/user_prompt_submit.py"
+      }]
+    }]
+  }
+}
+```
+
+> `C:/Users/YOU` 부분을 본인 경로로 바꿔야 해.
 
 3. Claude Code 재시작.
 
@@ -204,7 +287,7 @@ Claude Code의 `statusLine` 설정은 `"type": "command"`를 지원하는데, st
 }
 ```
 
-스크립트가 이걸 파싱하고, git 정보와 마지막 프롬프트를 가져온 다음, ANSI 이스케이프 코드로 스타일링된 문자열을 출력해.
+스크립트가 이걸 파싱하고, git 정보와 마지막 프롬프트(`UserPromptSubmit` 훅이 저장한 것)를 가져온 다음, ANSI 이스케이프 코드로 스타일링된 문자열을 출력해.
 
 ## 라이선스
 

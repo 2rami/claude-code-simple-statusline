@@ -46,7 +46,6 @@ The statusline automatically classifies your last prompt and shows a matching ic
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
 - Python 3.11+
-- [uv](https://docs.astral.sh/uv/) (Python package runner)
 - A terminal font that supports the icon set you choose (see [Font Setup](#font-setup))
 
 ## Font Setup
@@ -62,25 +61,56 @@ The default icon set uses **Nerd Font** glyphs. Your terminal font must be a Ner
 | **Hack Nerd Font** | [nerdfonts.com](https://www.nerdfonts.com/font-downloads) |
 | **MesloLGS Nerd Font** | [nerdfonts.com](https://www.nerdfonts.com/font-downloads) |
 
-### Install via Homebrew (macOS)
+### Install Font
+
+<details>
+<summary><b>macOS (Homebrew)</b></summary>
 
 ```bash
 brew install --cask font-jetbrains-mono-nerd-font
 ```
+</details>
 
-### After Installing
+<details>
+<summary><b>Windows (winget)</b></summary>
 
-Set the Nerd Font as your terminal's font:
+```powershell
+winget install JetBrainsMono.NerdFont
+```
 
-- **iTerm2**: Preferences > Profiles > Text > Font
-- **Terminal.app**: Preferences > Profiles > Font
-- **Alacritty**: `font.normal.family` in `alacritty.toml`
-- **Warp**: Settings > Appearance > Font
-- **VS Code Terminal**: `terminal.integrated.fontFamily` in settings
+Or with Chocolatey:
+
+```powershell
+choco install nerd-fonts-jetbrains-mono
+```
+</details>
+
+<details>
+<summary><b>Linux</b></summary>
+
+Download from [nerdfonts.com](https://www.nerdfonts.com/font-downloads), extract to `~/.local/share/fonts/`, then run:
+
+```bash
+fc-cache -fv
+```
+</details>
+
+### Set Terminal Font
+
+| Terminal | Setting |
+|----------|---------|
+| **iTerm2** | Preferences > Profiles > Text > Font |
+| **Terminal.app** | Preferences > Profiles > Font |
+| **Windows Terminal** | Settings > Profiles > Appearance > Font face |
+| **VS Code** | `terminal.integrated.fontFamily` in settings |
+| **Alacritty** | `font.normal.family` in `alacritty.toml` |
+| **Warp** | Settings > Appearance > Font |
 
 > Don't want to install a Nerd Font? Switch to `"icon_set": "unicode"` or `"plain"` in the config. See [Icon Sets](#icon-sets).
 
 ## Install
+
+### macOS / Linux
 
 **One-line install:**
 
@@ -94,8 +124,9 @@ curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline
 
 ```bash
 cp statusline.py ~/.claude/statusline.py
+cp user_prompt_submit.py ~/.claude/user_prompt_submit.py
 cp config.json ~/.claude/statusline-config.json
-chmod +x ~/.claude/statusline.py
+chmod +x ~/.claude/statusline.py ~/.claude/user_prompt_submit.py
 ```
 
 2. Add to your `~/.claude/settings.json`:
@@ -106,9 +137,61 @@ chmod +x ~/.claude/statusline.py
     "type": "command",
     "command": "~/.claude/statusline.py",
     "padding": 0
+  },
+  "hooks": {
+    "UserPromptSubmit": [{
+      "matcher": "*",
+      "hooks": [{
+        "type": "command",
+        "command": "python3 ~/.claude/user_prompt_submit.py"
+      }]
+    }]
   }
 }
 ```
+
+3. Restart Claude Code.
+
+### Windows
+
+**One-line install (PowerShell):**
+
+```powershell
+irm https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/install.ps1 | iex
+```
+
+**Manual install:**
+
+1. Copy files to `%USERPROFILE%\.claude\`:
+
+```powershell
+Copy-Item statusline.py $env:USERPROFILE\.claude\statusline.py
+Copy-Item user_prompt_submit.py $env:USERPROFILE\.claude\user_prompt_submit.py
+Copy-Item config.json $env:USERPROFILE\.claude\statusline-config.json
+```
+
+2. Add to your `%USERPROFILE%\.claude\settings.json`:
+
+```json
+{
+  "statusLine": {
+    "type": "command",
+    "command": "python C:/Users/YOU/.claude/statusline.py",
+    "padding": 0
+  },
+  "hooks": {
+    "UserPromptSubmit": [{
+      "matcher": "*",
+      "hooks": [{
+        "type": "command",
+        "command": "python C:/Users/YOU/.claude/user_prompt_submit.py"
+      }]
+    }]
+  }
+}
+```
+
+> Replace `C:/Users/YOU` with your actual user path.
 
 3. Restart Claude Code.
 
@@ -207,7 +290,7 @@ Claude Code's `statusLine` setting supports `"type": "command"`, which pipes a J
 }
 ```
 
-The script parses this, fetches git info and the last prompt, then outputs a styled string with ANSI escape codes.
+The script parses this, fetches git info and the last prompt (saved by the `UserPromptSubmit` hook), then outputs a styled string with ANSI escape codes.
 
 ## License
 
