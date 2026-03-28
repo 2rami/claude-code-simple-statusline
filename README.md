@@ -1,5 +1,7 @@
 <div align="center">
 
+**English** | **[한국어](README.ko.md)**
+
 # Claude Code Statusline
 
 A simple, minimal statusline for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
