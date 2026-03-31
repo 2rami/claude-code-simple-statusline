@@ -146,6 +146,16 @@ def get_last_prompt(session_id):
     return None
 
 
+def get_session_name(session_id):
+    name_file = Path.home() / ".claude" / "data" / "session-names" / f"{session_id}.txt"
+    if not name_file.exists():
+        return None
+    try:
+        return name_file.read_text(encoding='utf-8').strip()
+    except Exception:
+        return None
+
+
 def classify_prompt(prompt, icons, colors):
     if not prompt:
         return colors["prompt"]["idle"], icons["idle"], "..."
@@ -192,6 +202,7 @@ def main():
         ctx_pct = ctx.get("used_percentage", 0) or 0
 
         session_id = input_data.get("session_id", "unknown")
+        session_name = get_session_name(session_id)
         prompt = get_last_prompt(session_id)
         color, icon, display = classify_prompt(prompt, icons, colors)
 
@@ -202,7 +213,11 @@ def main():
 
         sep = f"{colors['separator']}{sep_char}{RESET}"
 
+        name_color = hex_to_ansi(cfg.get("colors", {}).get("session_name", "#9ece6a"))
+
         parts = [f"{colors['model']}{BOLD}{icons['model']} {model}{RESET}"]
+        if session_name:
+            parts.append(f"{name_color}{BOLD}[{session_name}]{RESET}")
         if branch:
             parts.append(f"{colors['git']}{icons['git']} {branch}{RESET}")
         parts.append(f"{colors['folder']}{icons['folder']} {project}{RESET}")
