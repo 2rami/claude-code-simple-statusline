@@ -8,12 +8,13 @@ import json
 import sys
 from pathlib import Path
 
-if sys.platform == "win32":
+try:
     sys.stdin.reconfigure(encoding="utf-8")
     sys.stdout.reconfigure(encoding="utf-8")
+except (AttributeError, OSError):
+    pass
 
 DATA_DIR = Path.home() / ".claude" / "data" / "prompts"
-NAMES_DIR = Path.home() / ".claude" / "data" / "session-names"
 
 
 def store_prompt(session_id, prompt):
@@ -23,28 +24,11 @@ def store_prompt(session_id, prompt):
         json.dump({"prompt": prompt}, f, ensure_ascii=False)
 
 
-def store_session_name(session_id, name):
-    NAMES_DIR.mkdir(parents=True, exist_ok=True)
-    name_file = NAMES_DIR / f"{session_id}.txt"
-    with open(name_file, "w", encoding="utf-8") as f:
-        f.write(name.strip())
-
-
 def main():
     try:
         input_data = json.loads(sys.stdin.read())
         session_id = input_data.get("session_id", "default")
         prompt = input_data.get("prompt", "")
-
-        # /rename 명령 처리
-        if prompt.startswith("/rename"):
-            name = prompt[len("/rename"):].strip()
-            if name:
-                store_session_name(session_id, name)
-                print(f"Session renamed to: {name}")
-            else:
-                print("Usage: /rename <name>")
-            sys.exit(0)
 
         if prompt:
             store_prompt(session_id, prompt)

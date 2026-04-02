@@ -209,7 +209,7 @@ try {
 if ($UvCmd) {
     Write-Host "  Launching configuration..."
     Write-Host ""
-    & uv run $Configure
+    & uv run --quiet $Configure
     Write-Host ""
     Write-Host "  Restart Claude Code to see the new statusline."
 } else {

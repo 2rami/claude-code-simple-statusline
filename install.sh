@@ -152,7 +152,7 @@ echo ""
 if command -v uv &> /dev/null; then
     echo "  Launching configuration..."
     echo ""
-    uv run "$CONFIGURE"
+    uv run --quiet "$CONFIGURE"
     echo ""
     echo "  Restart Claude Code to see the new statusline."
 else
