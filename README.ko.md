@@ -38,41 +38,39 @@ curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline
 
 **개별 설치:**
 
-> URL 먼저 저장 — `S="https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh"`
-
 **1. Node.js** — 없으면 brew (macOS) 또는 fnm (Linux)으로 자동 설치
 ```bash
-curl -fsSL $S | bash -s -- node
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- node
 ```
 
 **2. Claude Code** — `npm i -g @anthropic-ai/claude-code`로 CLI 전역 설치
 ```bash
-curl -fsSL $S | bash -s -- claude
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- claude
 ```
 
 **3. 상태표시줄** — D2Coding Nerd Font + 프롬프트 분류 아이콘 + 훅 설정
 ```bash
-curl -fsSL $S | bash -s -- statusline
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- statusline
 ```
 
 **4. MCP 서버** — context7 (라이브러리 문서 자동 조회) + exa (웹 검색, API 키 선택)
 ```bash
-curl -fsSL $S | bash -s -- mcp
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- mcp
 ```
 
 **5. 스킬 (플러그인)** — settings.json에 플러그인 활성화: context7, frontend-design, chrome-devtools, claude-md-management
 ```bash
-curl -fsSL $S | bash -s -- skills
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- skills
 ```
 
 **6. 설정** — settings.json 구성: 권한 바이패스 (`skipDangerousModePermissionPrompt`), 팀 모드 (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`), 노플리커 렌더링 (`CLAUDE_CODE_NO_FLICKER`)
 ```bash
-curl -fsSL $S | bash -s -- settings
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- settings
 ```
 
 **7. CLAUDE.md** — `~/.claude/CLAUDE.md`에 코딩 규칙 적용 (기존 파일은 `.bak`으로 백업)
 ```bash
-curl -fsSL $S | bash -s -- claudemd
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- claudemd
 ```
 
 ---

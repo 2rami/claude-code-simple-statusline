@@ -38,41 +38,39 @@ curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline
 
 **Individual components:**
 
-> Tip: save the URL first — `S="https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh"`
-
 **1. Node.js** — Auto-installs via brew (macOS) or fnm (Linux) if missing
 ```bash
-curl -fsSL $S | bash -s -- node
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- node
 ```
 
 **2. Claude Code** — Installs the CLI globally via `npm i -g @anthropic-ai/claude-code`
 ```bash
-curl -fsSL $S | bash -s -- claude
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- claude
 ```
 
 **3. Status Line** — D2Coding Nerd Font + statusline with prompt classification + hook
 ```bash
-curl -fsSL $S | bash -s -- statusline
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- statusline
 ```
 
 **4. MCP Servers** — context7 (auto-fetch library docs) + exa (web search, API key optional)
 ```bash
-curl -fsSL $S | bash -s -- mcp
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- mcp
 ```
 
 **5. Skills** — Enables plugins in settings.json: context7, frontend-design, chrome-devtools, claude-md-management
 ```bash
-curl -fsSL $S | bash -s -- skills
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- skills
 ```
 
 **6. Settings** — Configures settings.json: permission bypass (`skipDangerousModePermissionPrompt`), team mode (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`), no-flicker rendering (`CLAUDE_CODE_NO_FLICKER`)
 ```bash
-curl -fsSL $S | bash -s -- settings
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- settings
 ```
 
 **7. CLAUDE.md** — Overwrites `~/.claude/CLAUDE.md` with opinionated coding rules (backs up existing to `.bak`)
 ```bash
-curl -fsSL $S | bash -s -- claudemd
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- claudemd
 ```
 
 ---
