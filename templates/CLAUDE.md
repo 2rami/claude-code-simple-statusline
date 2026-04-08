@@ -14,6 +14,7 @@
 - 라이브러리/API 문서 → Context7 MCP
 - 최신 정보, 트렌드, 레퍼런스 검색 → Exa MCP
 - 특정 URL 단순 fetch → WebFetch
+- 유튜브 영상/웹 문서 조사·정리 → NotebookLM CLI (WebFetch 대신 nlm 우선)
 
 코드 규칙:
 - 이모지 금지. 아이콘 필요하면 SVG
