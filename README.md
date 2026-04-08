@@ -29,45 +29,61 @@ irm https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/i
 
 ## Full Setup (Harness Engineering Edition)
 
-Install everything at once, or pick individual components:
+Install everything at once, or pick what you need:
 
+**All at once:**
 ```bash
-# Everything
 curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- all
 ```
 
 **Individual components:**
 
-```bash
-S="https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh"
+> Tip: save the URL first — `S="https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh"`
 
-curl -fsSL $S | bash -s -- node         # Node.js (brew or fnm)
-curl -fsSL $S | bash -s -- claude       # Claude Code CLI
-curl -fsSL $S | bash -s -- statusline   # Statusline + Nerd Font
-curl -fsSL $S | bash -s -- mcp          # MCP servers (context7 + exa)
-curl -fsSL $S | bash -s -- skills       # Plugins (context7, frontend-design, chrome-devtools, etc.)
-curl -fsSL $S | bash -s -- commands     # /architect, /debug, /review
-curl -fsSL $S | bash -s -- settings     # Permission bypass + team mode + no-flicker
-curl -fsSL $S | bash -s -- claudemd     # CLAUDE.md coding rules (overwrites existing)
-curl -fsSL $S | bash -s -- cheatsheet   # Quick reference
+**1. Node.js** — Auto-installs via brew (macOS) or fnm (Linux) if missing
+```bash
+curl -fsSL $S | bash -s -- node
 ```
 
-<details>
-<summary><b>What each component does</b></summary>
+**2. Claude Code** — Installs the CLI globally via `npm i -g @anthropic-ai/claude-code`
+```bash
+curl -fsSL $S | bash -s -- claude
+```
 
-| Component | Description |
-|-----------|-------------|
-| `node` | Auto-installs Node.js if missing (via brew or fnm) |
-| `claude` | `npm i -g @anthropic-ai/claude-code` |
-| `statusline` | D2Coding Nerd Font + statusline + prompt classification hook |
-| `mcp` | context7 (library docs) + exa (web search, API key optional) |
-| `skills` | Enables plugins: context7, frontend-design, chrome-devtools, claude-md-management |
-| `commands` | Custom slash commands: `/architect` `/debug` `/review` |
-| `settings` | Permission bypass + team mode + no-flicker rendering in settings.json |
-| `claudemd` | Overwrites `~/.claude/CLAUDE.md` with coding rules (backs up existing) |
-| `cheatsheet` | Prints `/fast`, `ultrathink`, shortcuts reference |
+**3. Status Line** — D2Coding Nerd Font + statusline with prompt classification + hook
+```bash
+curl -fsSL $S | bash -s -- statusline
+```
 
-</details>
+**4. MCP Servers** — context7 (auto-fetch library docs) + exa (web search, API key optional)
+```bash
+curl -fsSL $S | bash -s -- mcp
+```
+
+**5. Skills** — Enables plugins in settings.json: context7, frontend-design, chrome-devtools, claude-md-management
+```bash
+curl -fsSL $S | bash -s -- skills
+```
+
+**6. Commands** — Custom slash commands: `/architect` (system design), `/debug` (structured debugging), `/review` (code review)
+```bash
+curl -fsSL $S | bash -s -- commands
+```
+
+**7. Settings** — Configures settings.json: permission bypass (`skipDangerousModePermissionPrompt`), team mode (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`), no-flicker rendering (`CLAUDE_CODE_NO_FLICKER`)
+```bash
+curl -fsSL $S | bash -s -- settings
+```
+
+**8. CLAUDE.md** — Overwrites `~/.claude/CLAUDE.md` with opinionated coding rules (backs up existing to `.bak`)
+```bash
+curl -fsSL $S | bash -s -- claudemd
+```
+
+**9. Cheatsheet** — Prints quick reference for `/fast`, `ultrathink`, shortcuts, MCP servers
+```bash
+curl -fsSL $S | bash -s -- cheatsheet
+```
 
 ---
 
