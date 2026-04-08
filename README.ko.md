@@ -25,6 +25,52 @@ irm https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/i
 
 </div>
 
+---
+
+## 풀 셋업 (하네스 엔지니어링 에디션)
+
+한 번에 전부 설치하거나, 필요한 것만 골라서 설치:
+
+```bash
+# 전부
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- all
+```
+
+**개별 설치:**
+
+```bash
+S="https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh"
+
+curl -fsSL $S | bash -s -- node         # Node.js (brew 또는 fnm)
+curl -fsSL $S | bash -s -- claude       # Claude Code CLI
+curl -fsSL $S | bash -s -- statusline   # 상태표시줄 + Nerd Font
+curl -fsSL $S | bash -s -- mcp          # MCP 서버 (context7 + exa)
+curl -fsSL $S | bash -s -- skills       # 플러그인 (context7, frontend-design, chrome-devtools 등)
+curl -fsSL $S | bash -s -- commands     # /architect, /debug, /review
+curl -fsSL $S | bash -s -- settings     # 권한 바이패스 + 팀 모드 + 노플리커
+curl -fsSL $S | bash -s -- claudemd     # CLAUDE.md 코딩 규칙 (기존 파일 덮어쓰기)
+curl -fsSL $S | bash -s -- cheatsheet   # 빠른 참조
+```
+
+<details>
+<summary><b>각 컴포넌트 설명</b></summary>
+
+| 컴포넌트 | 설명 |
+|----------|------|
+| `node` | Node.js 없으면 자동 설치 (brew 또는 fnm) |
+| `claude` | `npm i -g @anthropic-ai/claude-code` |
+| `statusline` | D2Coding Nerd Font + 상태표시줄 + 프롬프트 분류 훅 |
+| `mcp` | context7 (라이브러리 문서) + exa (웹 검색, API 키 선택) |
+| `skills` | 플러그인 활성화: context7, frontend-design, chrome-devtools, claude-md-management |
+| `commands` | 커스텀 슬래시 명령어: `/architect` `/debug` `/review` |
+| `settings` | 권한 바이패스 + 팀 모드 + 노플리커 렌더링 settings.json 설정 |
+| `claudemd` | `~/.claude/CLAUDE.md` 코딩 규칙 덮어쓰기 (기존 파일 백업) |
+| `cheatsheet` | `/fast`, `ultrathink`, 단축키 참조 출력 |
+
+</details>
+
+---
+
 ## 기능
 
 | 세그먼트 | 정보 | 색상 |

@@ -25,6 +25,52 @@ irm https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/i
 
 </div>
 
+---
+
+## Full Setup (Harness Engineering Edition)
+
+Install everything at once, or pick individual components:
+
+```bash
+# Everything
+curl -fsSL https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh | bash -s -- all
+```
+
+**Individual components:**
+
+```bash
+S="https://raw.githubusercontent.com/2rami/claude-code-simple-statusline/main/setup.sh"
+
+curl -fsSL $S | bash -s -- node         # Node.js (brew or fnm)
+curl -fsSL $S | bash -s -- claude       # Claude Code CLI
+curl -fsSL $S | bash -s -- statusline   # Statusline + Nerd Font
+curl -fsSL $S | bash -s -- mcp          # MCP servers (context7 + exa)
+curl -fsSL $S | bash -s -- skills       # Plugins (context7, frontend-design, chrome-devtools, etc.)
+curl -fsSL $S | bash -s -- commands     # /architect, /debug, /review
+curl -fsSL $S | bash -s -- settings     # Permission bypass + team mode + no-flicker
+curl -fsSL $S | bash -s -- claudemd     # CLAUDE.md coding rules (overwrites existing)
+curl -fsSL $S | bash -s -- cheatsheet   # Quick reference
+```
+
+<details>
+<summary><b>What each component does</b></summary>
+
+| Component | Description |
+|-----------|-------------|
+| `node` | Auto-installs Node.js if missing (via brew or fnm) |
+| `claude` | `npm i -g @anthropic-ai/claude-code` |
+| `statusline` | D2Coding Nerd Font + statusline + prompt classification hook |
+| `mcp` | context7 (library docs) + exa (web search, API key optional) |
+| `skills` | Enables plugins: context7, frontend-design, chrome-devtools, claude-md-management |
+| `commands` | Custom slash commands: `/architect` `/debug` `/review` |
+| `settings` | Permission bypass + team mode + no-flicker rendering in settings.json |
+| `claudemd` | Overwrites `~/.claude/CLAUDE.md` with coding rules (backs up existing) |
+| `cheatsheet` | Prints `/fast`, `ultrathink`, shortcuts reference |
+
+</details>
+
+---
+
 ## Features
 
 | Segment | Info | Color |
