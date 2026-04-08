@@ -217,20 +217,7 @@ PYEOF
 }
 
 # ════════════════════════════════════════════════════
-# 6. Custom Commands
-# ════════════════════════════════════════════════════
-setup_commands() {
-    header "Custom Commands"
-    CMDS_DIR="$CLAUDE_DIR/commands"
-    mkdir -p "$CMDS_DIR"
-    for cmd in architect debug review; do
-        curl -fsSL "$BASE_URL/commands/$cmd.md" -o "$CMDS_DIR/$cmd.md" 2>/dev/null
-    done
-    ok "/architect  /debug  /review"
-}
-
-# ════════════════════════════════════════════════════
-# 7. Settings
+# 6. Settings
 # ════════════════════════════════════════════════════
 setup_settings() {
     header "Settings"
@@ -283,39 +270,6 @@ setup_claudemd() {
 }
 
 # ════════════════════════════════════════════════════
-# 9. Cheatsheet
-# ════════════════════════════════════════════════════
-setup_cheatsheet() {
-    cat << 'CHEAT'
-
-  Cheatsheet
-  ──────────────────────────────────────
-
-  모드
-    /fast             빠른 출력 (같은 모델)
-    ultrathink        프롬프트에 추가하면 깊은 추론
-    Shift+Tab         플랜 모드 토글
-
-  커스텀 명령어
-    /architect        시스템 아키텍처 설계
-    /debug            체계적 디버깅
-    /review           코드 리뷰
-
-  단축키
-    Esc               현재 작업 취소
-    Ctrl+C            생성 중단
-    Tab               파일 경로 자동완성
-
-  MCP
-    context7          라이브러리 최신 문서 자동 조회
-    exa               Claude Code 안에서 웹 검색
-
-  ──────────────────────────────────────
-
-CHEAT
-}
-
-# ════════════════════════════════════════════════════
 # 전체 설치
 # ════════════════════════════════════════════════════
 setup_all() {
@@ -324,10 +278,8 @@ setup_all() {
     setup_statusline
     setup_mcp
     setup_skills
-    setup_commands
     setup_settings
     setup_claudemd
-    setup_cheatsheet
     echo -e "\n  ${GREEN}${BOLD}설치 완료.${NC} ${BOLD}claude${NC} 로 시작하세요.\n"
 }
 
@@ -342,10 +294,8 @@ case "$CMD" in
     statusline) setup_statusline ;;
     mcp)        setup_mcp ;;
     skills)     setup_skills ;;
-    commands)   setup_commands ;;
     settings)   setup_settings ;;
     claudemd)   setup_claudemd ;;
-    cheatsheet) setup_cheatsheet ;;
     all)        setup_all ;;
     *)
         echo ""
@@ -361,10 +311,8 @@ case "$CMD" in
         echo -e "    ${GREEN}statusline${NC}   상태표시줄 + Nerd Font"
         echo -e "    ${GREEN}mcp${NC}          MCP 서버 (context7, exa)"
         echo -e "    ${GREEN}skills${NC}       플러그인 (context7, frontend-design, chrome-devtools 등)"
-        echo -e "    ${GREEN}commands${NC}     커스텀 명령어 (/architect, /debug, /review)"
         echo -e "    ${GREEN}settings${NC}     권한 바이패스 + 팀 모드 + 노플리커"
         echo -e "    ${GREEN}claudemd${NC}     CLAUDE.md 코딩 규칙 (기존 파일 덮어쓰기)"
-        echo -e "    ${GREEN}cheatsheet${NC}   빠른 참조"
         echo ""
         echo -e "  ${BOLD}예시${NC}"
         echo -e "    curl -fsSL .../setup.sh | bash -s -- all"

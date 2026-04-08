@@ -65,24 +65,14 @@ curl -fsSL $S | bash -s -- mcp
 curl -fsSL $S | bash -s -- skills
 ```
 
-**6. 커스텀 명령어** — `/architect` (시스템 설계), `/debug` (체계적 디버깅), `/review` (코드 리뷰)
-```bash
-curl -fsSL $S | bash -s -- commands
-```
-
-**7. 설정** — settings.json 구성: 권한 바이패스 (`skipDangerousModePermissionPrompt`), 팀 모드 (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`), 노플리커 렌더링 (`CLAUDE_CODE_NO_FLICKER`)
+**6. 설정** — settings.json 구성: 권한 바이패스 (`skipDangerousModePermissionPrompt`), 팀 모드 (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`), 노플리커 렌더링 (`CLAUDE_CODE_NO_FLICKER`)
 ```bash
 curl -fsSL $S | bash -s -- settings
 ```
 
-**8. CLAUDE.md** — `~/.claude/CLAUDE.md`에 코딩 규칙 적용 (기존 파일은 `.bak`으로 백업)
+**7. CLAUDE.md** — `~/.claude/CLAUDE.md`에 코딩 규칙 적용 (기존 파일은 `.bak`으로 백업)
 ```bash
 curl -fsSL $S | bash -s -- claudemd
-```
-
-**9. 치트시트** — `/fast`, `ultrathink`, 단축키, MCP 서버 빠른 참조 출력
-```bash
-curl -fsSL $S | bash -s -- cheatsheet
 ```
 
 ---

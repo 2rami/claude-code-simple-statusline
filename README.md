@@ -65,24 +65,14 @@ curl -fsSL $S | bash -s -- mcp
 curl -fsSL $S | bash -s -- skills
 ```
 
-**6. Commands** — Custom slash commands: `/architect` (system design), `/debug` (structured debugging), `/review` (code review)
-```bash
-curl -fsSL $S | bash -s -- commands
-```
-
-**7. Settings** — Configures settings.json: permission bypass (`skipDangerousModePermissionPrompt`), team mode (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`), no-flicker rendering (`CLAUDE_CODE_NO_FLICKER`)
+**6. Settings** — Configures settings.json: permission bypass (`skipDangerousModePermissionPrompt`), team mode (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`), no-flicker rendering (`CLAUDE_CODE_NO_FLICKER`)
 ```bash
 curl -fsSL $S | bash -s -- settings
 ```
 
-**8. CLAUDE.md** — Overwrites `~/.claude/CLAUDE.md` with opinionated coding rules (backs up existing to `.bak`)
+**7. CLAUDE.md** — Overwrites `~/.claude/CLAUDE.md` with opinionated coding rules (backs up existing to `.bak`)
 ```bash
 curl -fsSL $S | bash -s -- claudemd
-```
-
-**9. Cheatsheet** — Prints quick reference for `/fast`, `ultrathink`, shortcuts, MCP servers
-```bash
-curl -fsSL $S | bash -s -- cheatsheet
 ```
 
 ---
